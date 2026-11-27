@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>StudySprint</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231F6F4A'/%3E%3Cpath d='M16 8v8l5 3' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#FAFAF8;--sf:#FFFFFF;--bd:#E4E3DF;--ink:#1B1B1A;--ink2:#5F5E5A;--ink3:#8C8B86;--chip:#F0EFEB;--g:#1F6F4A;--og:#FFFFFF;--gc:#EAF4EE;--ogc:#14502F;--am:#8A6A1F;--amc:#F6EFDC;--rd:#B3261E;--rdc:#FBEBE9;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--sf:#1D1D1B;--bd:#31302D;--ink:#ECEAE5;--ink2:#A9A69F;--ink3:#7B7872;--chip:#262624;--g:#6FBF98;--og:#0E2619;--gc:#1A2E24;--ogc:#BFE3CF;--am:#D9AE5C;--amc:#33291A;--rd:#E5877D;--rdc:#34201E}}
+:root[data-theme="dark"]{--bg:#151514;--sf:#1D1D1B;--bd:#31302D;--ink:#ECEAE5;--ink2:#A9A69F;--ink3:#7B7872;--chip:#262624;--g:#6FBF98;--og:#0E2619;--gc:#1A2E24;--ogc:#BFE3CF;--am:#D9AE5C;--amc:#33291A;--rd:#E5877D;--rdc:#34201E}
+*{box-sizing:border-box}html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--bd)}
+.hd{max-width:720px;margin:0 auto;padding:0 20px;height:52px;display:flex;align-items:center;gap:24px}
+.brand{font-weight:600;letter-spacing:-.01em;cursor:pointer;white-space:nowrap}
+#tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-left:auto}#tabs::-webkit-scrollbar{display:none}
+#tabs button{border:0;background:none;border-radius:6px;padding:10px 12px;font-size:14px;font-weight:500;color:var(--ink2);white-space:nowrap}
+#tabs button:hover{color:var(--ink)}#tabs button.on{color:var(--ink);background:var(--chip)}
+@media(max-width:600px){.hd{height:auto;flex-wrap:wrap;gap:0;padding:10px 20px 6px}#tabs{width:100%;margin:6px 0 0}}
+#app{max-width:720px;margin:0 auto;padding:20px 20px 72px}
+h1{font-size:24px;font-weight:600;margin:4px 0 14px;letter-spacing:-.02em}
+h2{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);margin:28px 0 8px}
+.sub{color:var(--ink2);font-size:14px;margin:-6px 0 14px}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:6px;padding:12px 14px;margin-bottom:8px}
+.card.ok{border-left:3px solid var(--g);background:var(--gc)}.card.no{border-left:3px solid var(--rd);background:var(--rdc)}
+.ok .ttl,.ok .stt,.gt{color:var(--g)}.no .stt,.rt{color:var(--rd)}.stt{font-size:13px;font-weight:500}
+.row{display:flex;align-items:center;gap:10px}.sp{flex:1;min-width:0}.mut{color:var(--ink2);font-size:14px}.tiny{color:var(--ink3);font-size:12px}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--bd);background:var(--sf);border-radius:6px;padding:8px 14px;font-weight:500;font-size:14px}
+button:hover{border-color:var(--ink3)}
+button.p{background:var(--g);color:var(--og);border-color:var(--g)}button.p:hover{filter:brightness(1.08)}
+button.d{color:var(--rd);border-color:var(--rd)}button.l{border:0;background:none;padding:10px 10px;color:var(--ink2);font-size:13px}button.l:hover{color:var(--ink)}
+button.l.d{color:var(--rd)}
+button.back{border:0;background:none;padding:8px 12px 8px 0;margin:0 0 4px;color:var(--ink2);font-size:14px;display:inline-flex;align-items:center}button.back:hover{color:var(--ink)}
+button.w{width:100%;padding:11px;margin-top:6px}
+button:disabled{opacity:.4;cursor:not-allowed}
+input[type=text],input[type=number],select{width:100%;font-size:16px;padding:10px 10px;border-radius:6px;border:1px solid var(--bd);background:var(--sf)}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--g);outline-offset:1px}
+input[type=checkbox]{width:18px;height:18px;accent-color:var(--g);flex:none}
+.chip{display:inline-block;font-size:12px;font-weight:500;padding:1px 8px;border-radius:4px;background:var(--chip);color:var(--ink2);white-space:nowrap}
+.chip.g{background:var(--gc);color:var(--g)}.chip.a{background:var(--amc);color:var(--am)}.chip.r{background:var(--rdc);color:var(--rd)}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.bar{height:4px;border-radius:2px;background:var(--chip);overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--g)}
+.stp{display:flex;align-items:center;gap:6px}.stp button{width:40px;height:40px;padding:0;font-size:18px}.stp b{min-width:56px;text-align:center;font-weight:500;font-variant-numeric:tabular-nums}
+.btns{display:flex;gap:8px}.btns button{flex:1;padding:11px 6px}
+.cols{display:flex;align-items:flex-end;gap:3px;height:110px}.cols div{flex:1;background:var(--g);min-height:2px;opacity:.85}
+.clock{font-size:60px;font-weight:300;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1}
+.lbl{font-size:12px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px}
+.big{font-size:30px;font-weight:600;letter-spacing:-.02em}.big span{font-size:14px;font-weight:400;color:var(--ink2);letter-spacing:0}
+#toast{position:fixed;left:12px;right:12px;bottom:calc(16px + env(safe-area-inset-bottom,0px));max-width:696px;margin:0 auto;background:var(--ink);color:var(--bg);padding:11px 14px;border-radius:6px;font-size:14px;z-index:40;display:none}
+.empty{color:var(--ink3);padding:20px 0;font-size:14px}
+</style>
+</head>
+<body>
+<header><div class="hd"><span class="brand" data-a="go" data-v="home">StudySprint</span><nav id="tabs"></nav></div></header>
+<div id="app"></div>
+<div id="toast" role="status"></div>
+<script>
+(function(){
+"use strict";
+var MIN=60000,COL=["#5B7C99","#7A9E7E","#C08A5B","#8E7AA6","#B5707A","#6F9A9A"],PRI=["Low","Medium","High"];
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
+var db=load(),V={view:"home",sid:null,rid:null,days:7,plan:null,confirm:null,toast:null,restored:false};
+function fresh(){return{subjects:[],tasks:[],sessions:[],nid:1,set:{auto:false,brk:5,goal:60,theme:"system"}}}
+function load(){try{var r=localStorage.getItem("studysprint-v1");if(r){var d=JSON.parse(r);if(d&&d.set&&d.subjects)return d}}catch(e){}return fresh()}
+function save(){try{localStorage.setItem("studysprint-v1",JSON.stringify(db))}catch(e){}}
+function id(){return db.nid++}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function $(s){return document.querySelector(s)}
+function pad(n){return n<10?"0"+n:""+n}
+function clock(ms){var o=ms<0,t=o?Math.floor(-ms/1000):Math.floor((ms+999)/1000),h=Math.floor(t/3600),m=Math.floor(t%3600/60),s=t%60,b=h>0?h+":"+pad(m)+":"+pad(s):pad(m)+":"+pad(s);return o?"+"+b:b}
+function fmtMs(ms){var m=Math.floor(ms/MIN),s=Math.floor(ms%MIN/1000);return s===0?m+" min":m+" min "+s+" s"}
+function fmtMin(m){m=Math.round(m);return m>=60?Math.floor(m/60)+" h "+(m%60?m%60+" min":""):m+" min"}
+function subj(i){return db.subjects.filter(function(s){return s.id===i})[0]}
+function task(i){return db.tasks.filter(function(t){return t.id===i})[0]}
+function sess(i){return db.sessions.filter(function(s){return s.id===i})[0]}
+function active(){return db.sessions.filter(function(s){return s.status==="active"||s.status==="paused"})[0]}
+function elapsed(s,now){var r=s.lastResumed!=null?Math.max(0,now-s.lastResumed):0;return s.acc+r}
+function dayStart(t){var d=new Date(t);d.setHours(0,0,0,0);return d.getTime()}
+function scol(i){var s=subj(i);if(!s)return"#9A958D";return COL[(s.ci!=null?s.ci:0)%COL.length]}
+/* ---------- rules (same as the Android app) ---------- */
+function adjust(fin,outcome,next){
+ if(fin.type!=="task")return{};
+ var nb=next&&next.type==="break";
+ if(outcome==="skipped"){return(nb&&fin.actual<MIN)?{drop:true,msg:"Task skipped early, so the next break was removed"}:{}}
+ if(outcome!=="completed")return{};
+ var over=fin.actual-fin.planned;
+ if(over>5000&&nb){var bp=next.planned,fl=Math.max(Math.floor(bp/2),MIN),red=Math.max(bp-Math.floor(over/2),fl);
+  if(red<bp)return{nb:red,msg:"Task ran over, so the break was shortened from "+fmtMs(bp)+" to "+fmtMs(red)};return{}}
+ var early=fin.planned-fin.actual;
+ if(early>=MIN)return{msg:"Finished "+Math.floor(early/MIN)+" min ahead of plan, so the session will end earlier"};
+ return{}}
+function suggest(taskId){
+ var runs=0,tot=0;
+ db.sessions.forEach(function(s){s.segs.forEach(function(g){if(g.type==="task"&&g.taskId===taskId&&g.status==="completed"){runs++;tot+=g.actual}})});
+ if(runs<2)return null;
+ return{min:Math.min(480,Math.max(1,Math.round(tot/runs/MIN))),runs:runs}}
+function buildSegs(items,brk,bmin){
+ var r=[];items.forEach(function(it,i){
+  if(brk&&i>0)r.push({type:"break",label:"Break",planned:bmin*MIN,actual:0,status:"pending"});
+  var t=task(it.taskId);r.push({type:"task",label:t.title,taskId:t.id,sid:t.sid,planned:it.min*MIN,actual:0,status:"pending"})});
+ return r}
+/* ---------- session engine ---------- */
+function startSession(items,brk,bmin){
+ var segs=buildSegs(items,brk,bmin),now=Date.now();segs[0].status="active";
+ db.sessions.push({id:id(),start:now,end:null,status:"active",segs:segs,cur:0,acc:0,lastResumed:now});save()}
+function nextIdx(s,from){for(var i=from+1;i<s.segs.length;i++){if(s.segs[i].status==="pending")return i}return -1}
+function finish(outcome,auto){
+ var s=active();if(!s)return;var now=Date.now(),cur=s.segs[s.cur];
+ cur.actual=elapsed(s,now);cur.status=outcome;cur.notified=true;
+ if(cur.type==="task"&&outcome==="completed"&&!auto){var t=task(cur.taskId);if(t)t.done=true}
+ var nxt=s.segs[s.cur+1],a=adjust(cur,outcome,nxt);
+ if(a.drop&&nxt)nxt.status="skipped";
+ if(a.nb&&nxt)nxt.planned=a.nb;
+ var wasPaused=s.status==="paused",ni=nextIdx(s,s.cur);
+ if(ni<0){s.status="completed";s.end=now;s.lastResumed=null;s.acc=0;V.view="summary";V.rid=s.id;V.toast="Session complete";location.hash="#summary/"+s.id}
+ else{s.cur=ni;s.segs[ni].status="active";s.acc=0;s.lastResumed=wasPaused?null:now;V.toast=a.msg?a.msg+". Now: "+s.segs[ni].label:"Now: "+s.segs[ni].label}
+ save();render()}
+function pause(){var s=active();if(!s||s.status!=="active")return;s.acc=elapsed(s,Date.now());s.lastResumed=null;s.status="paused";save();render()}
+function resume(){var s=active();if(!s||s.status!=="paused")return;V.restored=false;s.lastResumed=Date.now();s.status="active";save();render()}
+function stopSession(){
+ var s=active();if(!s)return;var now=Date.now(),c=s.segs[s.cur];
+ c.actual=elapsed(s,now);c.status="skipped";
+ s.status="aborted";s.end=now;s.lastResumed=null;V.view="summary";V.rid=s.id;V.confirm=null;V.toast="Session stopped";save();location.hash="#summary/"+s.id;render()}
+/* ---------- analytics ---------- */
+function rows(since){var r=[];db.sessions.forEach(function(s){if((s.status!=="completed"&&s.status!=="aborted")||s.start<since)return;s.segs.forEach(function(g){if(g.type==="task")r.push({t:s.start,sid:g.sid,p:g.planned,a:g.actual,st:g.status})})});return r}
+function todayMs(){var d0=dayStart(Date.now()),t=0,now=Date.now();
+ db.sessions.forEach(function(s){if(s.start<d0)return;var live=s.status==="active"||s.status==="paused";s.segs.forEach(function(g,i){if(g.type!=="task")return;t+=(live&&i===s.cur)?elapsed(s,now):g.actual})});return t}
+/* ---------- views ---------- */
+function tabs(){var T=[["home","Home"],["plan","Plan"],["subjects","Subjects"],["history","History"],["analytics","Analytics"],["settings","Settings"]],
+ on=V.view==="tasks"?"subjects":V.view==="summary"?"history":V.view==="active"?"home":V.view;
+ $("#tabs").innerHTML=T.map(function(t){return'<button data-a="go" data-v="'+t[0]+'" class="'+(on===t[0]?"on":"")+'">'+t[1]+"</button>"}).join("")}
+function greet(){var h=new Date().getHours();return h<12?"Good morning":h<17?"Good afternoon":"Good evening"}
+function vHome(){
+ var s=active(),td=todayMs(),goal=db.set.goal,pct=Math.min(100,Math.round(td/MIN/goal*100)),pend=db.tasks.filter(function(t){return!t.done}).length;
+ var h='<div class="tiny">'+new Date().toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"})+"</div><h1>"+greet()+'</h1>';
+ h+='<div class="card"><div class="lbl">Today</div><div class="big">'+fmtMin(td/MIN)+' <span>of '+goal+' min goal</span></div><div class="bar" style="margin-top:12px"><i style="width:'+pct+'%"></i></div></div>';
+ if(s){var c=s.segs[s.cur];h+='<div class="card"><div class="row"><div class="sp"><div class="lbl">Session in progress</div><div>'+esc(c.label)+'</div></div><span class="chip '+(s.status==="paused"?"":"g")+'">'+(s.status==="paused"?"Paused":"Running")+'</span></div><button class="p w" data-a="go" data-v="active">Open session</button></div>'}
+ else h+='<div class="row" style="margin-top:12px"><button class="p" data-a="go" data-v="plan">Plan a session</button><span class="mut">'+pend+" pending "+(pend===1?"task":"tasks")+"</span></div>";
+ var rec=db.sessions.filter(function(x){return x.status==="completed"||x.status==="aborted"}).sort(function(a,b){return b.start-a.start}).slice(0,3);
+ h+='<h2>Recent sessions</h2>'+(rec.length?rec.map(function(x){return sessRow(x,false)}).join(""):'<div class="empty">No sessions yet.</div>');
+ return h}
+function focusMs(s){return s.segs.reduce(function(a,g){return a+(g.type==="task"?g.actual:0)},0)}
+function sessRow(s,del){var done=s.status==="completed";
+ return'<div class="card row'+(done?" ok":"")+'" style="cursor:pointer" data-a="sum" data-i="'+s.id+'"><div class="sp"><b>'+new Date(s.start).toLocaleString(undefined,{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})+'</b><div class="mut">'+s.segs.filter(function(g){return g.type==="task"}).length+" tasks · "+fmtMin(focusMs(s)/MIN)+' focus</div></div><span class="chip '+(done?"g":"")+'">'+(done?"Completed":"Stopped")+"</span>"+
+ (del?(V.confirm==="h"+s.id?'<button class="d" data-a="delsess" data-i="'+s.id+'">Confirm</button>':'<button class="l d" data-a="askdel" data-i="'+s.id+'">Delete</button>'):"")+"</div>"}
+function dots(sel,act){return'<div class="row" style="flex-wrap:wrap;margin:8px 0">'+COL.map(function(c,i){return'<button data-a="'+act+'" data-i="'+i+'" aria-label="Colour '+(i+1)+'" style="width:30px;height:30px;padding:0;border-radius:50%;background:'+c+';border:3px solid '+(i===sel?"var(--ink)":"transparent")+'"></button>'}).join("")+"</div>"}
+function vSubjects(){
+ var nc=V.nc!=null?V.nc:db.subjects.length%6;
+ var h='<h1>Subjects</h1><p class="sub">Add subjects, then tasks under each one.</p>';
+ h+='<div class="card"><input type="text" id="ns" maxlength="40" placeholder="New subject (e.g. Physics)" value="'+esc(V.nn||"")+'">'+dots(nc,"ncol")+'<button class="p w" data-a="addsub" style="margin-top:0">Add subject</button></div>';
+ if(!db.subjects.length)h+='<div class="empty">No subjects yet.</div>';
+ db.subjects.forEach(function(s){
+  if(V.edit==="s"+s.id){h+='<div class="card"><b>Edit subject</b><input type="text" id="es" maxlength="40" style="margin-top:8px" value="'+esc(V.en!=null?V.en:s.name)+'">'+dots(V.ec,"ecol")+'<div class="btns"><button data-a="cancel">Cancel</button><button class="p" data-a="savesub" data-i="'+s.id+'">Save</button></div></div>';return}
+  var n=db.tasks.filter(function(t){return t.sid===s.id&&!t.done}).length,all=db.tasks.filter(function(t){return t.sid===s.id}).length;
+  h+='<div class="card row" style="cursor:pointer" data-a="open" data-i="'+s.id+'"><span class="dot" style="background:'+scol(s.id)+'"></span><div class="sp"><b>'+esc(s.name)+'</b><div class="mut">'+n+" pending · "+(all-n)+' completed</div></div><button class="l" data-a="editsub" data-i="'+s.id+'">Edit</button>'+
+  (V.confirm==="s"+s.id?'<button class="d" data-a="delsub" data-i="'+s.id+'">Confirm delete</button>':'<button class="l d" data-a="asksub" data-i="'+s.id+'">Delete</button>')+"</div>"});
+ if(V.confirm&&V.confirm[0]==="s")h+='<div class="tiny">Deleting a subject also deletes its tasks.</div>';
+ return h}
+function taskCard(t){
+ if(V.edit==="t"+t.id)return'<div class="card"><b>Edit task</b><input type="text" id="et" maxlength="80" style="margin-top:8px" value="'+esc(t.title)+'"><div class="row" style="margin-top:8px"><select id="ep">'+PRI.map(function(n,k){return'<option value="'+k+'"'+(t.pri===k?" selected":"")+">"+n+" priority</option>"}).join("")+'</select><input type="number" id="em" min="1" max="480" value="'+(t.est||25)+'" style="width:90px" aria-label="Estimated minutes"><span class="mut">min</span></div><div class="btns" style="margin-top:10px"><button data-a="cancel">Cancel</button><button class="p" data-a="savetask" data-i="'+t.id+'">Save</button></div></div>';
+ return'<div class="card row'+(t.done?" ok":"")+'"><input type="checkbox" data-a="tog" data-i="'+t.id+'" '+(t.done?"checked":"")+' aria-label="Done"><div class="sp ttl">'+esc(t.title)+'</div><span class="chip '+(t.pri===2?"r":t.pri===1?"a":"")+'">'+PRI[t.pri]+'</span><span class="chip">'+(t.est||25)+' min</span><button class="l" data-a="edittask" data-i="'+t.id+'" >Edit</button>'+
+ (V.confirm==="t"+t.id?'<button class="d" data-a="deltask" data-i="'+t.id+'">Confirm</button>':'<button class="l d" data-a="asktask" data-i="'+t.id+'">Delete</button>')+"</div>"}
+function vTasks(){
+ var s=subj(V.sid);if(!s){V.view="subjects";return vSubjects()}
+ var ts=db.tasks.filter(function(t){return t.sid===s.id}).sort(function(a,b){return(b.pri-a.pri)||(a.id-b.id)});
+ var pe=ts.filter(function(t){return!t.done}),co=ts.filter(function(t){return t.done});
+ var h="<h1>"+esc(s.name)+"</h1>";
+ h+='<div class="card"><input type="text" id="nt" maxlength="80" placeholder="Task title"><div class="row" style="margin-top:8px"><select id="np"><option value="0">Low priority</option><option value="1" selected>Medium priority</option><option value="2">High priority</option></select><input type="number" id="nm" min="1" max="480" value="25" style="width:90px" aria-label="Estimated minutes"><span class="mut">min</span></div><button class="p w" data-a="addtask">Add task</button></div>';
+ if(!ts.length)h+='<div class="empty">No tasks yet.</div>';
+ if(pe.length)h+="<h2>Pending ("+pe.length+")</h2>"+pe.map(taskCard).join("");
+ if(co.length)h+="<h2>Completed ("+co.length+")</h2>"+co.map(taskCard).join("");
+ return h}
+function shown(t){var sg=suggest(t.id);return sg?sg.min:(t.est||25)}
+function vPlan(){
+ if(active())return'<h1>Plan session</h1><div class="empty">You can plan a new session once the current one ends.</div><button class="p w" data-a="go" data-v="active">Open session</button>';
+ var P=V.plan||(V.plan={sel:{},brk:true,bmin:db.set.brk});
+ var pend=db.tasks.filter(function(t){return!t.done}).sort(function(a,b){return(b.pri-a.pri)||(a.id-b.id)});
+ var h="<h1>Plan session</h1><p class=\"sub\">Pick tasks and set minutes for each. Order follows priority.</p>";
+ if(!pend.length)return h+'<div class="empty">No pending tasks. Add some under Subjects first.</div><button class="w" data-a="go" data-v="subjects">Go to Subjects</button>';
+ pend.forEach(function(t){var on=P.sel[t.id]!=null,sg=suggest(t.id),sb=subj(t.sid);
+  h+='<div class="card"><div class="row"><input type="checkbox" data-a="sel" data-i="'+t.id+'" '+(on?"checked":"")+' aria-label="Select"><span class="dot" style="background:'+scol(t.sid)+'"></span><div class="sp"><b>'+esc(t.title)+'</b><div class="tiny">'+esc(sb?sb.name:"")+" · "+PRI[t.pri]+" · est. "+(t.est||25)+" min</div></div>"+
+  (on?'<div class="stp"><button data-a="min" data-i="'+t.id+'" data-d="-5">−</button><b>'+P.sel[t.id]+' min</b><button data-a="min" data-i="'+t.id+'" data-d="5">+</button></div>':"")+"</div>"+
+  (sg?'<div style="margin-top:8px" class="tiny">Suggested '+sg.min+" min (average of "+sg.runs+" completed runs)"+(on&&P.sel[t.id]!==sg.min?' <button class="l" data-a="sug" data-i="'+t.id+'" data-m="'+sg.min+'">Use it</button>':"")+"</div>":"")+"</div>"});
+ var ids=pend.filter(function(t){return P.sel[t.id]!=null}),foc=ids.reduce(function(a,t){return a+P.sel[t.id]},0),bc=P.brk&&ids.length>1?ids.length-1:0;
+ h+='<div class="card"><div class="row"><b class="sp">Breaks between tasks</b><input type="checkbox" data-a="brk" '+(P.brk?"checked":"")+' aria-label="Breaks"></div>'+
+ (P.brk?'<div class="row" style="margin-top:10px"><span class="sp mut">Break length</span><div class="stp"><button data-a="bm" data-d="-1">−</button><b>'+P.bmin+' min</b><button data-a="bm" data-d="1">+</button></div></div>':"")+"</div>";
+ var endAt=new Date(Date.now()+(foc+bc*P.bmin)*MIN);
+ h+='<div class="card"><div class="row"><span class="sp mut">Focus</span><b>'+fmtMin(foc)+'</b></div><div class="row"><span class="sp mut">Breaks ('+bc+')</span><b>'+fmtMin(bc*P.bmin)+'</b></div><div class="row"><span class="sp mut">Total</span><b>'+fmtMin(foc+bc*P.bmin)+"</b></div>"+(ids.length?'<div class="tiny" style="margin-top:6px">If you start now, it ends around '+pad(endAt.getHours())+":"+pad(endAt.getMinutes())+"</div>":"")+"</div>";
+ h+='<button class="p w" data-a="start" '+(ids.length?"":"disabled")+">Start session</button>";return h}
+function vActive(){
+ var s=active();if(!s){V.view="home";return vHome()}
+ var c=s.segs[s.cur],now=Date.now(),el=elapsed(s,now),rem=c.planned-el,brk=c.type==="break",ov=rem<0,paused=s.status==="paused";
+ var h='<div class="row"><span id="chip" class="chip '+(paused?"":ov?"r":"g")+'">'+(paused?"Paused":ov?"Overrun":"Running")+'</span><span class="sp"></span><span class="tiny">Segment '+(s.cur+1)+" of "+s.segs.length+"</span></div>";
+ if(V.restored)h+='<div class="card" style="margin-top:12px"><b>Session restored</b><div class="mut">Your time was recalculated from saved timestamps.</div></div>';
+ h+='<div style="margin-top:18px"><div class="lbl">'+(brk?"Break":"Focus")+"</div><h1 style=\"margin-bottom:2px\">"+esc(c.label)+"</h1>"+(brk?"":'<div class="mut">'+esc((subj(c.sid)||{}).name||"")+"</div>")+"</div>";
+ h+='<div style="margin:20px 0 16px"><div class="clock" id="clock">'+clock(rem)+'</div><div class="tiny">of '+Math.round(c.planned/MIN)+' min planned</div><div class="bar" style="margin-top:12px"><i id="pbar"></i></div></div>';
+ h+='<div id="left" class="mut" style="margin-bottom:14px"></div>';
+ h+='<div class="btns"><button data-a="'+(paused?"resume":"pause")+'">'+(paused?"Resume":"Pause")+'</button><button class="p" data-a="done">'+(brk?"End break":"Done")+'</button><button data-a="skip">Skip</button></div>';
+ h+=(V.confirm==="stop"?'<div class="card" style="margin-top:14px"><b>Stop this session?</b><div class="btns" style="margin-top:10px"><button data-a="cancel">Keep going</button><button class="d" data-a="stop">Stop</button></div></div>':'<button class="l d" data-a="askstop" style="margin-top:12px">Stop session</button>');
+ var up=s.segs.slice(s.cur+1).filter(function(g){return g.status==="pending"});
+ if(up.length)h+="<h2>Up next</h2>"+up.map(function(g){return'<div class="card row"><span class="dot" style="background:'+(g.type==="break"?"var(--am)":scol(g.sid))+'"></span><div class="sp">'+esc(g.label)+'</div><span class="mut">'+Math.round(g.planned/MIN)+" min</span></div>"}).join("");
+ return h}
+function vSummary(){
+ var s=sess(V.rid);if(!s){V.view="history";return vHistory()}
+ var tk=s.segs.filter(function(g){return g.type==="task"}),foc=0,pl=0,ac=0,fin=0,sk=0;
+ s.segs.forEach(function(g){pl+=g.planned;ac+=g.actual});
+ tk.forEach(function(g){foc+=g.actual;if(g.status==="completed")fin++;if(g.status==="skipped")sk++});
+ var h='<h1>Session summary</h1><span class="chip '+(s.status==="completed"?"g":"")+'">'+(s.status==="completed"?"Completed":"Stopped")+"</span>";
+ h+='<div class="card" style="margin-top:12px"><div class="row"><span class="sp mut">Focus time</span><b>'+fmtMin(foc/MIN)+'</b></div><div class="row"><span class="sp mut">Planned (with breaks)</span><b>'+fmtMin(pl/MIN)+'</b></div><div class="row"><span class="sp mut">Actual (with breaks)</span><b>'+fmtMin(ac/MIN)+'</b></div><div class="row"><span class="sp mut">Tasks finished</span><b class="gt">'+fin+" of "+tk.length+'</b></div><div class="row"><span class="sp mut">Tasks skipped</span><b class="'+(sk?"rt":"")+'">'+sk+"</b></div></div><h2>Tasks</h2>";
+ tk.forEach(function(g){var c=g.status==="completed"?"ok":g.status==="skipped"?"no":"",pm=Math.round(g.planned/MIN)+" min planned";
+  var r=c==="ok"?"Completed · "+fmtMs(g.actual)+" of "+pm:c==="no"?"Skipped · "+fmtMs(g.actual)+" of "+pm:"Not started · "+pm;
+  h+='<div class="card '+c+'"><div class="row"><div class="sp ttl">'+esc(g.label)+'</div></div><div class="stt" style="margin-top:2px">'+r+'</div></div>'});
+ return h}
+function vHistory(){
+ var l=db.sessions.filter(function(x){return x.status==="completed"||x.status==="aborted"}).sort(function(a,b){return b.start-a.start});
+ return"<h1>History</h1>"+(l.length?l.map(function(s){return sessRow(s,true)}).join(""):'<div class="empty">No finished sessions yet.</div>')}
+function vAnalytics(){
+ var n=V.days,now=Date.now(),w=new Date(now);w.setHours(0,0,0,0);w.setDate(w.getDate()-(n-1));var start=w.getTime(),R=rows(start),bars=[],i;
+ for(i=0;i<n;i++){var d=new Date(start);d.setDate(d.getDate()+i);var a=d.getTime(),b=new Date(a);b.setDate(b.getDate()+1);var m=0;
+  R.forEach(function(r){if(r.t>=a&&r.t<b.getTime())m+=r.a/MIN});
+  bars.push({d:d,m:m,l:n<=7?d.toLocaleDateString(undefined,{weekday:"narrow"}):(i%5===0?String(d.getDate()):"")})}
+ var mx=Math.max.apply(null,bars.map(function(x){return x.m}).concat([1])),tot=bars.reduce(function(a,x){return a+x.m},0);
+ var h='<h1>Analytics</h1><div class="row" style="margin:8px 0"><button class="'+(n===7?"p":"")+'" data-a="days" data-n="7">7 days</button><button class="'+(n===30?"p":"")+'" data-a="days" data-n="30">30 days</button></div>';
+ h+='<div class="card"><div class="mut">Focused time</div><div style="font-size:30px;font-weight:700">'+fmtMin(tot)+'</div><div class="cols" style="margin-top:12px">'+bars.map(function(x){return'<div title="'+x.d.toLocaleDateString()+": "+Math.round(x.m)+' min" style="height:'+Math.max(2,Math.round(x.m/mx*100))+'%"></div>'}).join("")+'</div><div class="row tiny" style="gap:3px;margin-top:4px">'+bars.map(function(x){return'<span style="flex:1;text-align:center;overflow:visible;white-space:nowrap">'+x.l+"</span>"}).join("")+"</div></div>";
+ var by={};R.forEach(function(r){if(r.sid!=null&&r.a>0)by[r.sid]=(by[r.sid]||0)+r.a});
+ var keys=Object.keys(by).sort(function(a,b){return by[b]-by[a]}),top=keys.length?by[keys[0]]:1;
+ h+="<h2>By subject</h2>"+(keys.length?keys.map(function(k){var s=subj(parseInt(k,10)),ms=by[k];return'<div class="card"><div class="row"><span class="dot" style="background:'+scol(parseInt(k,10))+'"></span><b class="sp">'+esc(s?s.name:"Deleted subject")+"</b><span>"+fmtMin(ms/MIN)+'</span></div><div class="bar" style="margin-top:8px"><i style="width:'+Math.round(ms/top*100)+"%;background:"+scol(parseInt(k,10))+'"></i></div></div>'}).join(""):'<div class="empty">No data in this period.</div>');
+ var done=R.filter(function(r){return r.st==="completed"}),pl=0,ac=0;done.forEach(function(r){pl+=r.p;ac+=r.a});
+ var sk=R.filter(function(r){return r.st==="skipped"}).length;
+ h+="<h2>Pace</h2>";
+ if(done.length||sk){h+='<div class="card"><div class="row"><span class="sp mut">Planned (completed tasks)</span><b>'+fmtMin(pl/MIN)+'</b></div><div class="row"><span class="sp mut">Actual</span><b>'+fmtMin(ac/MIN)+'</b></div><div class="row"><span class="sp mut">Completed tasks</span><b>'+done.length+'</b></div><div class="row"><span class="sp mut">Skipped tasks</span><b>'+sk+"</b></div></div>"}
+ else h+='<div class="empty">Finish a few sessions to see your pace.</div>';
+ return h}
+function stepRow(t,sub,k,v,u){return'<div class="card row"><div class="sp"><b>'+t+'</b><div class="tiny">'+sub+'</div></div><div class="stp"><button data-a="set" data-k="'+k+'" data-d="-'+u.s+'">−</button><b>'+v+' min</b><button data-a="set" data-k="'+k+'" data-d="'+u.s+'">+</button></div></div>'}
+function vSettings(){
+ var S=db.set,h="<h1>Settings</h1><h2>Session</h2>";
+ h+='<div class="card row"><div class="sp"><b>Auto-advance</b><div class="tiny">Move to the next segment automatically when time is up.</div></div><input type="checkbox" data-a="auto" '+(S.auto?"checked":"")+' aria-label="Auto-advance"></div>';
+ h+=stepRow("Break length","Default break between tasks in a new session.","brk",S.brk,{s:1});
+ h+="<h2>Goal</h2>"+stepRow("Daily goal","Used to measure today's progress on Home.","goal",S.goal,{s:15});
+ h+='<h2>Appearance</h2><div class="card"><div class="btns">'+["system","light","dark"].map(function(m){return'<button class="'+(S.theme===m?"p":"")+'" data-a="theme" data-m="'+m+'">'+m[0].toUpperCase()+m.slice(1)+"</button>"}).join("")+"</div></div>";
+ h+='<h2>Data</h2><div class="card"><div class="mut" style="margin-bottom:10px">Everything is stored in this browser only. Nothing is sent anywhere.</div>'+(V.confirm==="wipe"?'<button class="d w" data-a="wipe">Confirm: delete all data</button>':'<button class="d w" data-a="askwipe">Delete all data</button>')+"</div>";
+ return h}
+var trail=[];
+function hashOf(){return location.hash||"#home"}
+function nav(hs){if(location.hash===hs){route();render()}else location.hash=hs}
+function route(){
+ var p=hashOf().slice(1).split("/"),v=p[0],n=parseInt(p[1],10),ok=["home","plan","subjects","history","analytics","settings","active","tasks","summary"];
+ if(ok.indexOf(v)<0)v="home";
+ if(v==="tasks"){if(subj(n))V.sid=n;else v="subjects"}
+ if(v==="summary"){if(sess(n))V.rid=n;else v="history"}
+ if(v==="active"&&!active()){v="home";try{history.replaceState(null,"","#home")}catch(e){}if(trail.length)trail[trail.length-1]="#home"}
+ V.view=v;V.confirm=null;V.edit=null}
+window.addEventListener("hashchange",function(){var h=hashOf(),l=trail.length;if(l>=2&&trail[l-2]===h)trail.pop();else if(trail[l-1]!==h)trail.push(h);route();render()});
+function render(){
+ var v=V.view,m={home:vHome,subjects:vSubjects,tasks:vTasks,plan:vPlan,active:vActive,summary:vSummary,history:vHistory,analytics:vAnalytics,settings:vSettings};
+ var th=db.set.theme;if(th==="system")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",th);
+ $("#app").innerHTML='<button class="back" data-a="'+(v==="home"?"site":"back")+'" aria-label="Back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>'+(m[v]||vHome)();tabs();tick();
+ if(V.toast){var t=$("#toast");t.textContent=V.toast;t.style.display="block";V.toast=null;clearTimeout(render.tm);render.tm=setTimeout(function(){t.style.display="none"},4500)}}
+function toast(m){V.toast=m;var t=$("#toast");t.textContent=m;t.style.display="block";V.toast=null;clearTimeout(render.tm);render.tm=setTimeout(function(){t.style.display="none"},4500)}
+function tick(){
+ var s=active();if(!s)return;var now=Date.now(),c=s.segs[s.cur],el=elapsed(s,now),rem=c.planned-el;
+ if(V.view==="active"){
+  var ck=$("#clock"),pb=$("#pbar"),lf=$("#left");
+  if(ck)ck.textContent=clock(rem);
+  if(pb){pb.style.width=(c.planned>0?Math.min(100,el/c.planned*100):0)+"%";pb.style.background=rem<0?"var(--rd)":""}
+  if(lf){var left=Math.max(0,rem);s.segs.forEach(function(g,i){if(i>s.cur&&g.status==="pending")left+=g.planned});
+   var end=new Date(now+left);lf.textContent="About "+Math.max(1,Math.ceil(left/MIN))+" min left in session"+(s.status==="active"?" · ends around "+pad(end.getHours())+":"+pad(end.getMinutes()):"")}
+  var ch=$("#chip");if(ch&&s.status==="active"){var o=rem<0;ch.textContent=o?"Overrun":"Running";ch.className="chip "+(o?"r":"g")}}
+ if(s.status==="active"&&rem<=1000&&!c.notified){
+  c.notified=true;save();
+  if(db.set.auto)finish("completed",true);else toast("Planned time reached. Tap Done, or keep going to run over.")}}
+/* ---------- events ---------- */
+function num(el,k){return parseInt(el.getAttribute(k),10)}
+function clamp(v,a,b){return Math.min(b,Math.max(a,v))}
+document.addEventListener("click",function(e){
+ var el=e.target.closest("[data-a]");if(!el||el.type==="checkbox")return;
+ var a=el.getAttribute("data-a"),i=num(el,"data-i"),P=V.plan;
+ if(a==="open"&&e.target.closest("button"))return;
+ switch(a){
+ case"go":nav("#"+el.getAttribute("data-v"));return;
+ case"site":location.href="../index.html";return;
+ case"back":if(trail.length>=2)history.back();else nav({tasks:"#subjects",summary:"#history"}[V.view]||"#home");return;
+ case"open":nav("#tasks/"+i);return;
+ case"sum":nav("#summary/"+i);return;
+ case"ncol":V.nn=$("#ns").value;V.nc=i;break;
+ case"addsub":var n=$("#ns").value.trim();if(!n){toast("Enter a subject name");return}db.subjects.push({id:id(),name:n,ci:V.nc!=null?V.nc:db.subjects.length%6});V.nc=null;V.nn=null;save();break;
+ case"editsub":V.edit="s"+i;V.ec=subj(i).ci||0;V.en=null;V.confirm=null;e.stopPropagation();break;
+ case"ecol":V.en=$("#es").value;V.ec=i;break;
+ case"savesub":var en=$("#es").value.trim();if(!en){toast("Enter a subject name");return}var sb=subj(i);sb.name=en;sb.ci=V.ec;V.edit=null;V.en=null;save();break;
+ case"edittask":V.edit="t"+i;V.confirm=null;break;
+ case"savetask":var tt=$("#et").value.trim();if(!tt){toast("Enter a task title");return}var tk=task(i);tk.title=tt;tk.pri=parseInt($("#ep").value,10);tk.est=clamp(parseInt($("#em").value,10)||25,1,480);V.edit=null;save();break;
+ case"askdel":V.confirm="h"+i;break;
+ case"delsess":db.sessions=db.sessions.filter(function(x){return!(x.id===i&&(x.status==="completed"||x.status==="aborted"))});V.confirm=null;save();break;
+ case"asksub":V.confirm="s"+i;e.stopPropagation();break;
+ case"delsub":db.subjects=db.subjects.filter(function(s){return s.id!==i});db.tasks=db.tasks.filter(function(t){return t.sid!==i});V.confirm=null;save();break;
+ case"addtask":var t=$("#nt").value.trim();if(!t){toast("Enter a task title");return}db.tasks.push({id:id(),sid:V.sid,title:t,pri:parseInt($("#np").value,10),est:clamp(parseInt($("#nm").value,10)||25,1,480),done:false});save();break;
+ case"asktask":V.confirm="t"+i;break;
+ case"deltask":db.tasks=db.tasks.filter(function(t){return t.id!==i});if(P)delete P.sel[i];V.confirm=null;save();break;
+ case"min":P.sel[i]=clamp(P.sel[i]+num(el,"data-d"),1,480);break;
+ case"sug":P.sel[i]=num(el,"data-m");break;
+ case"bm":P.bmin=clamp(P.bmin+num(el,"data-d"),1,60);break;
+ case"start":
+  var items=db.tasks.filter(function(t){return!t.done&&P.sel[t.id]!=null}).sort(function(a,b){return(b.pri-a.pri)||(a.id-b.id)}).map(function(t){return{taskId:t.id,min:P.sel[t.id]}});
+  if(!items.length)return;startSession(items,P.brk,P.bmin);V.plan=null;V.view="active";V.restored=false;location.hash="#active";break;
+ case"pause":pause();return;case"resume":resume();return;
+ case"done":finish("completed");return;case"skip":finish("skipped");return;
+ case"askstop":V.confirm="stop";break;case"cancel":V.confirm=null;V.edit=null;V.en=null;break;case"stop":stopSession();return;
+ case"days":V.days=num(el,"data-n");break;
+ case"set":var k=el.getAttribute("data-k"),d=num(el,"data-d");db.set[k]=k==="goal"?clamp(db.set[k]+d,15,600):clamp(db.set[k]+d,1,60);save();break;
+ case"theme":db.set.theme=el.getAttribute("data-m");save();break;
+ case"askwipe":V.confirm="wipe";break;
+ case"wipe":db=fresh();save();V.plan=null;V.confirm=null;nav("#home");return;
+ default:return}
+ render()});
+document.addEventListener("change",function(e){
+ var el=e.target,a=el.getAttribute&&el.getAttribute("data-a");if(!a)return;var i=num(el,"data-i");
+ if(a==="tog"){var t=task(i);if(t){t.done=el.checked;save()}}
+ else if(a==="sel"){var P=V.plan;if(el.checked)P.sel[i]=shown(task(i));else delete P.sel[i]}
+ else if(a==="brk"){V.plan.brk=el.checked}
+ else if(a==="auto"){db.set.auto=el.checked;save()}
+ render()});
+document.addEventListener("keydown",function(e){if(e.key!=="Enter")return;var t=e.target;
+ if(t.id==="ns"){e.preventDefault();$("[data-a=addsub]").click()}else if(t.id==="nt"){e.preventDefault();$("[data-a=addtask]").click()}});
+document.addEventListener("visibilitychange",function(){if(!document.hidden)tick()});
+/* ---------- init ---------- */
+var s0=active();if(s0){var c0=s0.segs[s0.cur],e0=s0.status==="active"?Math.min(elapsed(s0,Date.now()),Math.max(c0.planned,s0.acc)):s0.acc;s0.acc=e0;c0.actual=e0;c0.notified=false;s0.lastResumed=null;s0.status="paused";save();V.restored=true;try{history.replaceState(null,"","#active")}catch(e){}}
+trail=[hashOf()];route();render();setInterval(tick,250);
+})();
+</script>
+</body>
+</html>
