@@ -4,7 +4,7 @@ StudySprint turns a list of study tasks into a timed session. You add subjects a
 
 This repository is the web version of the StudySprint Android app. It has the same features, the same theme and the same scheduling rules.
 
-**Live site:** https://dhruvv-x.github.io/studysprint-web/
+**Live site:** https://studysprints03.netlify.app/
 
 ## Features
 
